@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -143,12 +143,12 @@ export default function AdminPage() {
 
     setBulk("");
     await loadAll();
-    alert("Imported ✅ (" + rows.length + ")");
+   alert("Imported ✅ (" + rows.length + ")");
   }
 
   return (
     <main style={{ padding: 30, maxWidth: 980, margin: "0 auto" }}>
-      <h1 style={{ fontSize: 26, fontWeight: 900 }}>Admin · Item Bank</h1>
+      <h1 style={{ fontSize: 26, fontWeight: 900 }}>Admin 路 Item Bank</h1>
 
       {msg && (
         <div style={{ marginTop: 12, padding: 12, border: "1px solid #ddd", borderRadius: 12 }}>
@@ -162,10 +162,10 @@ export default function AdminPage() {
         <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 10, marginTop: 12 }}>
           <div>Type</div>
           <select value={type} onChange={(e) => setType(e.target.value as any)} style={{ padding: 10, borderRadius: 10 }}>
-            <option value="A">A 完整句判断</option>
-            <option value="B">B 填空选词</option>
-            <option value="C">C 逗号断句关系</option>
-            <option value="D">D 句际过渡关系</option>
+         <option value="A">A Sentence Complete</option>
+<option value="B">B Fill-in Choice</option>
+<option value="C">C Comma Logic</option>
+<option value="D">D Transition Logic</option>
           </select>
 
           <div>Prompt</div>
@@ -217,3 +217,4 @@ export default function AdminPage() {
     </main>
   );
 }
+

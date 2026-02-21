@@ -1,8 +1,11 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-let _client: SupabaseClient | null = null;
+let _browserClient: SupabaseClient | null = null;
 
-// Only create client in browser; during build/prerender return null
+/**
+ * Browser-only client for pages/components
+ * - On server/build/prerender returns null to avoid crash
+ */
 export function getSupabaseBrowserClient(): SupabaseClient | null {
   if (typeof window === "undefined") return null;
 
@@ -11,6 +14,16 @@ export function getSupabaseBrowserClient(): SupabaseClient | null {
 
   if (!url || !key) return null;
 
-  if (!_client) _client = createClient(url, key);
-  return _client;
+  if (!_browserClient) _browserClient = createClient(url, key);
+  return _browserClient;
 }
+
+/**
+ * Backward-compatible export.
+ * Do NOT import this in server components.
+ * In browser it is safe.
+ */
+export const supabase: SupabaseClient = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? ""
+);

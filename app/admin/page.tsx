@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getSupabaseBrowserClient } from "../../src/lib/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
 
 type ItemRow = {
   id: number;
@@ -17,7 +17,12 @@ type ItemRow = {
 
 export default function AdminPage() {
   const router = useRouter();
-  const supabase = useMemo(() => getSupabaseBrowserClient(), []);
+ const supabase = useMemo(() => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}, []);
 
   const [msg, setMsg] = useState<string>("Loading...");
   const [items, setItems] = useState<ItemRow[]>([]);
